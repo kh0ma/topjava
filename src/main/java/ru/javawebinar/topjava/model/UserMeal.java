@@ -9,6 +9,15 @@ import java.time.LocalDateTime;
 public class UserMeal {
     private final LocalDateTime dateTime;
 
+    @Override
+    public String toString() {
+        return "UserMeal{" +
+                "dateTime=" + dateTime +
+                ", description='" + description + '\'' +
+                ", calories=" + calories +
+                '}';
+    }
+
     private final String description;
 
     private final int calories;
