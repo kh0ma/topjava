@@ -1,3 +1,5 @@
+<%@ page import="ru.javawebinar.topjava.util.MealsUtil" %>
+<%@ page import="java.util.List" %>
 <%--
   Created by IntelliJ IDEA.
   User: kh0ma
@@ -13,5 +15,19 @@
 <body>
 <h2><a href="index.html">Home</a></h2>
 <h2>Meal list</h2>
+<h2>
+
+    <%
+        List list = MealsUtil.generateMeal();
+    %>
+
+    <%
+        for (int i = 0; i < list.size(); i++) { %>
+    <%=list.get(i)%>
+       <% }%>
+
+
+
+</h2>
 </body>
 </html>
