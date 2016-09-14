@@ -16,35 +16,14 @@
 <body>
 <h2><a href="index.html">Home</a></h2>
 <h2>Meal list</h2>
-<h2>
-
-    <%
-        List list = MealsUtil.generateMeal();
-    %>
-
-    <%
-        for (int i = 0; i < list.size(); i++) { %>
-    <%=list.get(i)%>
-       <% }%>
-
-
-
-
-
-</h2>
-<h2>
-    <c:out value="${MealsUtil.generateMeal().get(0)}" />
-</h2>
-
 <table>
-    <!-- here should go some titles... -->
     <tr>
         <th align="left">Date</th>
         <th>Description</th>
         <th>Calories</th>
     </tr>
-    <c:forEach items="${MealsUtil.generateMeal()}" var="item">
-        <tr>
+    <c:forEach items="${MealsUtil.getFilteredWithExceeded(MealsUtil.generateMeal(),LocalTime.of(7, 0), LocalTime.of(12, 0), 2000)}" var="item">
+        <tr style="color:#80BFFF">
             <td>
                 <c:out value="${item.getDateTime()}" />
             </td>
