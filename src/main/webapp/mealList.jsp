@@ -1,5 +1,6 @@
 <%@ page import="ru.javawebinar.topjava.util.MealsUtil" %>
 <%@ page import="java.util.List" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: kh0ma
@@ -28,6 +29,33 @@
 
 
 
+
+
 </h2>
+<h2>
+    <c:out value="${MealsUtil.generateMeal().get(0)}" />
+</h2>
+
+<table>
+    <!-- here should go some titles... -->
+    <tr>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Calories</th>
+    </tr>
+    <c:forEach items="${MealsUtil.generateMeal()}" var="item">
+        <tr>
+            <td>
+                <c:out value="${item.getDateTime()}" />
+            </td>
+            <td>
+                <c:out value="${item.getDescription()}" />
+            </td>
+            <td>
+                <c:out value="${item.getCalories()}" />
+            </td>
+        </tr>
+    </c:forEach>
+</table>
 </body>
 </html>
