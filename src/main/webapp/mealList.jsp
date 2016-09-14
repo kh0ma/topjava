@@ -22,8 +22,12 @@
         <th>Description</th>
         <th>Calories</th>
     </tr>
-    <c:forEach items="${MealsUtil.getFilteredWithExceeded(MealsUtil.generateMeal(),LocalTime.of(7, 0), LocalTime.of(12, 0), 2000)}" var="item">
-        <tr style="color:#80BFFF">
+    <c:forEach items="${mealsList}" var="item">
+        <c:set var="trcolor" scope="session" value="color:#00FF00"/>
+        <c:if test="${item.isExceed()}">
+            <c:set var="trcolor" scope="session" value="color:#FF0000"/>
+        </c:if>
+        <tr style="${trcolor}">
             <td>
                 <c:out value="${item.getDateTime()}" />
             </td>
