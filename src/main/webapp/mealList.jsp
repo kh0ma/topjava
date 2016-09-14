@@ -39,7 +39,7 @@
 <table>
     <!-- here should go some titles... -->
     <tr>
-        <th>Date</th>
+        <th align="left">Date</th>
         <th>Description</th>
         <th>Calories</th>
     </tr>
