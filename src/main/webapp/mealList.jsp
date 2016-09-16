@@ -16,20 +16,25 @@
 <body>
 <h2><a href="index.html">Home</a></h2>
 <h2>Meal list</h2>
+<button>Add meal</button>
+<button>Edit meal</button>
+<button onclick="location.href='meals?deleteById=${id}'">Delete meal</button>
 <table>
-    <tr>
+    <tr bgcolor="#ffe4c4">
         <th align="left">Date</th>
         <th>Description</th>
         <th>Calories</th>
     </tr>
-    <c:forEach items="${mealsList}" var="item">
+    <c:forEach items="${mealsList}" var="item" varStatus="loop">
         <c:set var="trcolor" scope="session" value="color:#00FF00"/>
         <c:if test="${item.isExceed()}">
             <c:set var="trcolor" scope="session" value="color:#FF0000"/>
         </c:if>
-        <tr style="${trcolor}">
+        <c:set var="trBGcolor" scope="session" value="#FFFFFF"/>
+        <c:if test="${id == loop.index}"> <c:set var="trBGcolor" scope="session" value="#cabadd"/> </c:if>
+        <tr style="${trcolor}" bgcolor="${trBGcolor}" onclick="location.href='meals?id=${loop.index}'">
             <td>
-                <c:out value="${item.getDateTime()}" />
+                <c:out value="${item.getDateTime().toLocalDate()} ${item.getDateTime().toLocalTime()}" />
             </td>
             <td>
                 <c:out value="${item.getDescription()}" />

@@ -1,16 +1,16 @@
 package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
-import ru.javawebinar.topjava.model.MealWithExceed;
-import ru.javawebinar.topjava.util.MealsUtil;
+import ru.javawebinar.topjava.dao.DAO;
+import ru.javawebinar.topjava.dao.DAO_implementation;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalTime;
-import java.util.List;
+
 
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -19,16 +19,28 @@ import static org.slf4j.LoggerFactory.getLogger;
  */
 public class MealServlet extends HttpServlet{
     private static final Logger LOG = getLogger(MealServlet.class);
+    private static  final DAO dao = new DAO_implementation();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         LOG.debug("redirect to mealList");
 
-//        request.getRequestDispatcher("/userList.jsp").forward(request, response);
-        //response.sendRedirect("mealList.jsp");
+        //delete by id
+        String deleteByIdString = request.getParameter("deleteById");
+        Integer deleteById = null;
+        if(deleteByIdString != null) {
+            deleteById = Integer.parseInt(deleteByIdString);
+            dao.deleteById(deleteById);
+        }
 
-        List<MealWithExceed> mealWithExceeds = MealsUtil.getFilteredWithExceeded(MealsUtil.generateMeal(),LocalTime.MIN, LocalTime.MAX, 2000);
+        //get id by onclick row action
+        String idString = request.getParameter("id");
+        Integer id = null;
+        if(idString != null) id = Integer.parseInt(idString);
+        System.out.println(id);
+        request.setAttribute("id", id);
 
-        request.setAttribute("mealsList", mealWithExceeds);
+        request.setAttribute("mealsList", dao.read());
+
         request.getRequestDispatcher("/mealList.jsp").forward(request, response);
     }
 }
