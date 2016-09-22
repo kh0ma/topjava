@@ -2,6 +2,7 @@ package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.mock.InMemoryMealRepositoryImpl;
 import ru.javawebinar.topjava.repository.MealRepository;
@@ -23,6 +24,10 @@ import java.util.Objects;
 public class MealServlet extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(MealServlet.class);
 
+    static
+    {
+        AuthorizedUser.setCurrentUserId(0);
+    }
     private MealRepository repository;
 
     @Override
@@ -40,6 +45,7 @@ public class MealServlet extends HttpServlet {
                 request.getParameter("description"),
                 Integer.valueOf(request.getParameter("calories")));
 
+        meal.setUserID(AuthorizedUser.id());
         LOG.info(meal.isNew() ? "Create {}" : "Update {}", meal);
         repository.save(meal);
         response.sendRedirect("meals");

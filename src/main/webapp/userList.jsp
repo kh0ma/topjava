@@ -6,5 +6,9 @@
 <body>
 <h2><a href="index.html">Home</a></h2>
 <h2>User list</h2>
+<a href="users?userID=0">User1</a>
+<a href="users?userID=1">User2</a>
+<a href="users?userID=2">User3</a>
+
 </body>
 </html>

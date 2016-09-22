@@ -19,6 +19,7 @@ public class UserServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         LOG.debug("forward to userList");
+        System.out.println(request.getParameter("userID"));
         request.getRequestDispatcher("/userList.jsp").forward(request, response);
     }
 }
