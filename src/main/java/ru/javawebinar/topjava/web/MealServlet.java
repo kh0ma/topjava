@@ -24,10 +24,6 @@ import java.util.Objects;
 public class MealServlet extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(MealServlet.class);
 
-    static
-    {
-        AuthorizedUser.setCurrentUserId(0);
-    }
     private MealRepository repository;
 
     @Override
@@ -39,13 +35,14 @@ public class MealServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String id = request.getParameter("id");
+        String userID = request.getParameter("userID");
 
         Meal meal = new Meal(id.isEmpty() ? null : Integer.valueOf(id),
                 LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("description"),
                 Integer.valueOf(request.getParameter("calories")));
 
-        meal.setUserID(AuthorizedUser.id());
+        meal.setUserID(userID!=null&&userID!="" ? Integer.parseInt(userID):AuthorizedUser.id());
         LOG.info(meal.isNew() ? "Create {}" : "Update {}", meal);
         repository.save(meal);
         response.sendRedirect("meals");
@@ -57,7 +54,7 @@ public class MealServlet extends HttpServlet {
         if (action == null) {
             LOG.info("getAll");
             request.setAttribute("mealList",
-                    MealsUtil.getWithExceeded(repository.getAll(0), MealsUtil.DEFAULT_CALORIES_PER_DAY));
+                    MealsUtil.getWithExceeded(repository.getAll(AuthorizedUser.id()), MealsUtil.DEFAULT_CALORIES_PER_DAY));
             request.getRequestDispatcher("/mealList.jsp").forward(request, response);
 
         } else if ("delete".equals(action)) {
