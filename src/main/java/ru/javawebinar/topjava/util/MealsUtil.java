@@ -55,6 +55,7 @@ public class MealsUtil {
     }
 
     public static List<MealWithExceed> getFilteredWithExceeded(Collection<Meal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
+        if(meals == null) return null;
         Map<LocalDate, Integer> caloriesSumByDate = meals.stream()
                 .collect(
                         Collectors.groupingBy(Meal::getDate, Collectors.summingInt(Meal::getCalories))
