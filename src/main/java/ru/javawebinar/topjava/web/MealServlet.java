@@ -22,7 +22,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -65,7 +67,29 @@ public class MealServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
 
-        if (action == null) {
+        /*System.out.println("++++++++++++ Start Date = " + LocalDate.parse(request.getParameter("startDate")));
+        System.out.println("++++++++++++ End Date = " + LocalDate.parse(request.getParameter("endDate")));
+        System.out.println("++++++++++++ Start Time = " + LocalTime.parse(request.getParameter("startTime")));
+        System.out.println("++++++++++++ End Time = " + LocalTime.parse(request.getParameter("endTime")));
+        */
+        System.out.println("Action = " + action);
+
+        if("filter".equals(action))
+        {
+            String startDate = request.getParameter("startDate");
+            String endDate = request.getParameter("endDate");
+            String startTime = request.getParameter("startTime");
+            String endTime = request.getParameter("endTime");
+
+            LOG.info("filter");
+            request.setAttribute("mealList",
+                    service.getAllFiltered( startDate!=null&&startDate.length()!=0?LocalDate.parse(startDate):LocalDate.MIN,
+                                            startTime!=null&&startTime.length()!=0?LocalTime.parse(startTime):LocalTime.MIN,
+                                            endDate!=null&&endDate.length()!=0?LocalDate.parse(endDate):LocalDate.MAX,
+                                            endTime!=null&&endTime.length()!=0?LocalTime.parse(endTime):LocalTime.MAX));
+            request.getRequestDispatcher("/mealList.jsp").forward(request, response);
+        }
+        else if (action == null || action.length()==0) {
             LOG.info("getAll");
             request.setAttribute("mealList",
                     service.getAll());

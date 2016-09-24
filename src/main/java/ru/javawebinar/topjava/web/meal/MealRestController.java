@@ -33,6 +33,11 @@ public class MealRestController {
 
     public List<MealWithExceed> getAllFiltered(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime)
     {
+/*        if(startDate==null) startDate = LocalDate.MIN;
+        if(endDate==null) endDate = LocalDate.MAX;
+        if(startTime==null) startTime = LocalTime.MIN;
+        if(endTime==null) endTime = LocalTime.MAX;*/
+
         return getAll()
                 .stream()
                 .filter(mealWithExceed -> TimeUtil.isBetween(mealWithExceed.getDateTime(),startTime,endTime,startDate,endDate))
