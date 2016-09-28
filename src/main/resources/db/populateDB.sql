@@ -13,7 +13,7 @@ INSERT INTO user_roles (role, user_id) VALUES
   ('ROLE_USER', 100000),
   ('ROLE_ADMIN', 100001);
 
-INSERT INTO meals (user_id,descriprion, date_time, calories) VALUES
+INSERT INTO meals (user_id,description, date_time, calories) VALUES
   (100001,'meal1',now(),100),
   (100001,'meal2',now(),200),
   (100001,'meal3',now(),300),
