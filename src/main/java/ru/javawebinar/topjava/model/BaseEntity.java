@@ -48,4 +48,6 @@ public class BaseEntity {
         return (id == null) ? 0 : id;
     }
 
+
+
 }
