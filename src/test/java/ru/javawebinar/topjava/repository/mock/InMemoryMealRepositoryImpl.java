@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.repository.mock;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.util.IndexUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.util.TimeUtil;
 
@@ -13,6 +14,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import static ru.javawebinar.topjava.MealTestData.MEAL_ADMIN;
+import static ru.javawebinar.topjava.MealTestData.MEAL_USER;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
 
@@ -30,10 +33,8 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     private AtomicInteger counter = new AtomicInteger(0);
 
     {
-        MealsUtil.MEALS.forEach(um -> save(um, USER_ID));
-
-        save(new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 14, 0), "Админ ланч", 510), ADMIN_ID);
-        save(new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 21, 0), "Админ ужин", 1500), ADMIN_ID);
+        MEAL_USER.forEach(um -> save(um, USER_ID));
+        MEAL_ADMIN.forEach(am -> save(am, ADMIN_ID));
     }
 
     @Override
@@ -42,7 +43,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
         Integer mealId = meal.getId();
         if (meal.isNew()) {
-            mealId = counter.incrementAndGet();
+            mealId = IndexUtil.indexCounter();
             meal.setId(mealId);
         } else if (get(mealId, userId) == null) {
             return null;
