@@ -15,10 +15,24 @@ public class Meal extends BaseEntity {
     private String description;
 
     private int calories;
+    public Meal() {}
+    public Meal(Integer id, LocalDateTime dateTime, String description, int calories) {
+        super(id);
+        this.dateTime = dateTime;
+        this.description = description;
+        this.calories = calories;
 
+    }
     public Meal(LocalDateTime dateTime, String description, int calories) {
         this(null, dateTime, description, calories);
     }
+    public Meal(Meal meal) {
+        super(meal.getId());
+        this.calories = meal.getCalories();
+        this.dateTime = meal.getDateTime();
+        this.description = meal.getDescription();
+    }
+
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
@@ -32,10 +46,7 @@ public class Meal extends BaseEntity {
         this.calories = calories;
     }
 
-    public Meal() {
 
-
-    }
 
     @Override
     public Integer getId() {
@@ -47,13 +58,7 @@ public class Meal extends BaseEntity {
         this.id = id;
     }
 
-    public Meal(Integer id, LocalDateTime dateTime, String description, int calories) {
-        super(id);
-        this.dateTime = dateTime;
-        this.description = description;
-        this.calories = calories;
 
-    }
 
     public LocalDateTime getDateTime() {
         return dateTime;
