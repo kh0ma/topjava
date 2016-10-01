@@ -2,6 +2,7 @@ package ru.javawebinar.topjava.repository.mock;
 
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.repository.InMemoryMealRepository;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.IndexUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
@@ -24,7 +25,7 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
  * 15.09.2015.
  */
 @Repository
-public class InMemoryMealRepositoryImpl implements MealRepository {
+public class InMemoryMealRepositoryImpl implements InMemoryMealRepository {
 
     private static final Comparator<Meal> MEAL_COMPARATOR = Comparator.comparing(Meal::getDateTime).reversed();
 
@@ -36,6 +37,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
         MEAL_USER.forEach(um -> save(um, USER_ID));
         MEAL_ADMIN.forEach(am -> save(am, ADMIN_ID));
     }
+
 
     @Override
     public Meal save(Meal meal, int userId) {

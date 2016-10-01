@@ -12,6 +12,8 @@ import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.TimeUtil;
+import ru.javawebinar.topjava.util.exception.ExceptionUtil;
+import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import javax.sql.DataSource;
 import java.time.LocalDateTime;
@@ -57,9 +59,10 @@ public class JdbcMealRepositoryImpl implements MealRepository {
             Number newKey = insertMeal.executeAndReturnKey(map);
             meal.setId(newKey.intValue());
         } else {
-            namedParameterJdbcTemplate.update(
+            int update = namedParameterJdbcTemplate.update(
                     "UPDATE meals SET description=:description, date_time=:dateTime, " +
                             "calories=:calories  WHERE id=:id AND user_id=:userId", map);
+            if (update == 0) return null;
         }
         return meal;
     }

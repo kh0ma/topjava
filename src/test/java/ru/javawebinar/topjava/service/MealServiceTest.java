@@ -1,6 +1,5 @@
 package ru.javawebinar.topjava.service;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,18 +8,16 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.javawebinar.topjava.UserTestData;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.repository.mock.InMemoryMealRepositoryImpl;
 import ru.javawebinar.topjava.util.DbPopulator;
+import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Collection;
 
-import static org.junit.Assert.*;
 import static ru.javawebinar.topjava.MealTestData.MATCHER;
-import static ru.javawebinar.topjava.MealTestData.MEAL_USER;
 import static ru.javawebinar.topjava.MealTestData.MEAL_USER_1;
 
 /**
@@ -29,7 +26,8 @@ import static ru.javawebinar.topjava.MealTestData.MEAL_USER_1;
 
 @ContextConfiguration({
         "classpath:spring/spring-app.xml",
-        "classpath:spring/spring-db.xml"
+        "classpath:spring/spring-db.xml",
+        "classpath:spring/spring-context-test.xml"
 })
 @RunWith(SpringJUnit4ClassRunner.class)
 public class MealServiceTest {
@@ -37,7 +35,8 @@ public class MealServiceTest {
     @Autowired
     protected MealService service;
 
-    protected MealRepository repository = new InMemoryMealRepositoryImpl();
+    @Autowired
+    protected InMemoryMealRepositoryImpl repository;
 
     @Autowired
     private DbPopulator dbPopulator;
@@ -62,16 +61,17 @@ public class MealServiceTest {
 
     @Test
     public void delete() throws Exception {
-        service.delete(100003,UserTestData.USER_ID);
-        repository.delete(100003,UserTestData.USER_ID);
+        service.delete(100010, UserTestData.ADMIN_ID);
+        repository.delete(100010, UserTestData.ADMIN_ID);
 
-        Collection<Meal> all = service.getAll(UserTestData.USER_ID);
-        Collection<Meal> expected = repository.getAll(UserTestData.USER_ID);
+        Collection<Meal> all = service.getAll(UserTestData.ADMIN_ID);
+        Collection<Meal> expected = repository.getAll(UserTestData.ADMIN_ID);
         MATCHER.assertCollectionEquals(expected,all);
-        /*System.out.println("TESTED");
+/*        System.out.println("TESTED");
         all.forEach(System.out::println);
         System.out.println("Expected");
         expected.forEach(System.out::println);*/
+
 
     }
 
@@ -130,22 +130,39 @@ public class MealServiceTest {
     public void save() throws Exception {
         LocalDateTime now = LocalDateTime.now();
         Meal newMealJDBC = new Meal(now,"+++Новая еда+++",200);
-        Meal createdJDBC = service.save(newMealJDBC,UserTestData.USER_ID);
+        service.save(newMealJDBC, UserTestData.USER_ID);
         //newMealJDBC.setId(createdJDBC.getId());
-        System.out.println(createdJDBC);
+//        System.out.println(createdJDBC);
 
         Meal newMealInMemory = new Meal(now,"+++Новая еда+++",200);
-        Meal createdInMemory = repository.save(newMealInMemory,UserTestData.USER_ID);
+        repository.save(newMealInMemory, UserTestData.USER_ID);
         //newMealInMemory.setId(createdJDBC.getId());
-        System.out.println(createdInMemory);
+//        System.out.println(createdInMemory);
 
         Collection<Meal> all = service.getAll(UserTestData.USER_ID);
         Collection<Meal> expected = repository.getAll(UserTestData.USER_ID);
         MATCHER.assertCollectionEquals(expected,all);
-        System.out.println("TESTED");
+        /*System.out.println("TESTED");
         all.forEach(System.out::println);
         System.out.println("Expected");
-        expected.forEach(System.out::println);
+        expected.forEach(System.out::println);*/
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void getStolenMeal() {
+        service.get(100003, UserTestData.ADMIN_ID);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void deleteStolenMeal() {
+        service.get(100003, UserTestData.ADMIN_ID);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void updateStolenMeal() {
+        Meal updated = service.get(100003, UserTestData.USER_ID);
+        updated.setCalories(1000000000);
+        service.update(updated, UserTestData.ADMIN_ID);
     }
 
 }
