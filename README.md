@@ -1,4 +1,4 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c0cdfd201775488dbfc6e8bd2d2a1e21)](https://www.codacy.com/app/JavaWebinar/topjava08)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/da8fb8eab521431da20007395881cb4f)](https://www.codacy.com/app/khomenko-dp/topjava?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kh0ma/topjava&amp;utm_campaign=Badge_Grade)
 [![Build Status](https://travis-ci.org/JavaWebinar/topjava08.svg?branch=master)](https://travis-ci.org/JavaWebinar/topjava08)
 [![Dependency Status](https://dependencyci.com/github/JavaWebinar/topjava08/badge)](https://dependencyci.com/github/JavaWebinar/topjava08)
 
