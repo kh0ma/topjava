@@ -22,14 +22,21 @@ public class JpaMealRepositoryImpl implements MealRepository {
     private EntityManager em;
 
     @Override
+    @Transactional
     public Meal save(Meal meal, int userId) {
-        return null;
+        if (meal.isNew()) {
+            em.persist(meal);
+
+            return meal;
+        } else {
+            return em.merge(meal);
+        }
     }
 
     @Override
     @Transactional
     public boolean delete(int id, int userId) {
-        return em.createNamedQuery(Meal.DELETE).setParameter("id", id).setParameter("user_id",userId).executeUpdate() != 0;
+        return em.createNamedQuery(Meal.DELETE).setParameter("id", id).setParameter(1, userId).executeUpdate() != 0;
     }
 
     @Override
@@ -39,7 +46,7 @@ public class JpaMealRepositoryImpl implements MealRepository {
 
     @Override
     public List<Meal> getAll(int userId) {
-        return null;
+        return em.createNamedQuery(Meal.ALL_SORTED, Meal.class).setParameter(1, userId).getResultList();
     }
 
     @Override

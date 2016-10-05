@@ -1,10 +1,11 @@
 package ru.javawebinar.topjava.model;
 
-import org.hibernate.validator.constraints.Length;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -15,6 +16,7 @@ import java.time.LocalTime;
  */
 @NamedQueries({
         @NamedQuery(name = Meal.DELETE, query = "DELETE FROM Meal m WHERE m.id=:id AND m.user.id=?1"),
+        @NamedQuery(name = Meal.ALL_SORTED, query = "SELECT m FROM Meal m WHERE m.user.id=?1 ORDER BY m.dateTime DESC"),
 
 })
 @Entity
@@ -22,11 +24,12 @@ import java.time.LocalTime;
 public class Meal extends BaseEntity {
 
     public static final String DELETE = "Meal.delete";
+    public static final String ALL_SORTED = "Meal.all_sorted";
 /*    public static final String ALL_SORTED = "Meal.getAllSorted";
     public static final String BY_EMAIL = "Meal.getByEmail";*/
 
     @Column(name = "date_time", nullable = false)
-    @NotEmpty
+    @NotNull
     private LocalDateTime dateTime;
 
     @Column(name = "description", nullable = false)
@@ -86,6 +89,7 @@ public class Meal extends BaseEntity {
         this.calories = calories;
     }
 
+    @ManyToOne(cascade = CascadeType.ALL)
     public User getUser() {
         return user;
     }
