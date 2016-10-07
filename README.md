@@ -38,6 +38,7 @@ Maven/ Spring/ Security/ JPA(Hibernate)/ REST(Jackson)/ Bootstrap(CSS)/ jQuery +
 - Пояснения к HW2. Обработка Autowired
 - Домашнее задание (HW2 + Optional)
 
+
 #### 22.09: 3-е занятие
 - Разбор домашнего задания HW2 + Optional
 - Жизненный цикл Spring контекста
