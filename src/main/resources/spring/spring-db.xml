@@ -16,6 +16,8 @@
         <jdbc:script encoding="utf-8" location="classpath:db/populateDB.sql"/>
     </jdbc:initialize-database>
 
+
+
     <beans profile="hsqldb">
         <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>
 
@@ -26,6 +28,16 @@
               p:url="${database.url}"
               p:username="${database.username}"
               p:password="${database.password}"/>
+
+        <bean id="conversionService"
+              class="org.springframework.context.support.ConversionServiceFactoryBean">
+            <property name="converters">
+                <set>
+                    <bean autowire="byType" id="localDateTimeToTimestampConverter" class="ru.javawebinar.topjava.util.converters.LocalDateTimeToTimestampConverter"/>
+                    <bean autowire="byType" id="timestampToLocalDateTimeConverter" class="ru.javawebinar.topjava.util.converters.TimestampToLocalDateTimeConverter"/>
+                </set>
+            </property>
+        </bean>
     </beans>
 
     <beans profile="postgres">
