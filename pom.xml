@@ -228,6 +228,15 @@
             <version>7.0.65</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/postgresql/postgresql -->
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.3-1102.jdbc41</version>
+        </dependency>
+
+
+
 
         <dependency>
             <groupId>javax.servlet</groupId>
