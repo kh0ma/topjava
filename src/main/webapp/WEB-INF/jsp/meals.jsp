@@ -16,32 +16,32 @@
     <h3><fmt:message key="meals.title"/></h3>
     <form method="post" action="meals?action=filter">
         <dl>
-            <dt>From Date:</dt>
+            <dt><fmt:message key="meals.fromdate"/></dt>
             <dd><input type="date" name="startDate" value="${startDate}"></dd>
         </dl>
         <dl>
-            <dt>To Date:</dt>
+            <dt><fmt:message key="meals.todate"/></dt>
             <dd><input type="date" name="endDate" value="${endDate}"></dd>
         </dl>
         <dl>
-            <dt>From Time:</dt>
+            <dt><fmt:message key="meals.fromtime"/></dt>
             <dd><input type="time" name="startTime" value="${startTime}"></dd>
         </dl>
         <dl>
-            <dt>To Time:</dt>
+            <dt><fmt:message key="meals.totime"/></dt>
             <dd><input type="time" name="endTime" value="${endTime}"></dd>
         </dl>
-        <button type="submit">Filter</button>
+        <button type="submit"><fmt:message key="meals.filter"/></button>
     </form>
     <hr>
-    <a href="meals?action=create">Add Meal</a>
+    <a href="meals?action=create"><fmt:message key="meals.add"/></a>
     <hr>
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
         <tr>
-            <th>Date</th>
-            <th>Description</th>
-            <th>Calories</th>
+            <th><fmt:message key="meals.dt"/></th>
+            <th><fmt:message key="meals.desc"/></th>
+            <th><fmt:message key="meals.cal"/></th>
             <th></th>
             <th></th>
         </tr>
@@ -56,8 +56,8 @@
                 </td>
                 <td>${meal.description}</td>
                 <td>${meal.calories}</td>
-                <td><a href="meals?action=update&id=${meal.id}">Update</a></td>
-                <td><a href="meals?action=delete&id=${meal.id}">Delete</a></td>
+                <td><a href="meals?action=update&id=${meal.id}"><fmt:message key="meals.upd"/></a></td>
+                <td><a href="meals?action=delete&id=${meal.id}"><fmt:message key="meals.del"/></a></td>
             </tr>
         </c:forEach>
     </table>
