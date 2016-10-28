@@ -4,13 +4,16 @@
 <%@ taglib prefix="fn" uri="http://topjava.javawebinar.ru/functions" %>
 <html>
 <head>
-    <title>Meal list</title>
-    <link rel="stylesheet" href="css/style.css">
+    <jsp:include page="fragments/headTag.jsp"/>
+    <title><fmt:message key="meals.title"/></title>
+    <%--<c:url value="/resources/css/style.css" var="mainCssUrl" />
+    <link rel="stylesheet" href="${mainCssUrl}">--%>
 </head>
 <body>
+<jsp:include page="fragments/bodyHeader.jsp"/>
 <section>
     <h2><a href="${pageContext.request.contextPath}/">Home</a></h2>
-    <h3>Meal list</h3>
+    <h3><fmt:message key="meals.title"/></h3>
     <form method="post" action="meals?action=filter">
         <dl>
             <dt>From Date:</dt>
@@ -59,5 +62,6 @@
         </c:forEach>
     </table>
 </section>
+<jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>
