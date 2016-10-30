@@ -238,7 +238,7 @@
 
         <!-- https://mvnrepository.com/artifact/postgresql/postgresql -->
         <dependency>
-            <groupId>postgresql</groupId>
+            <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>9.4.1211.jre7</version>
         </dependency>
