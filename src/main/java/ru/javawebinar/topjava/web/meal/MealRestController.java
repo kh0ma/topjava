@@ -1,16 +1,15 @@
 package ru.javawebinar.topjava.web.meal;
 
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.to.MealWithExceed;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+
+import static ru.javawebinar.topjava.AuthorizedUser.setId;
 
 /**
  * GKislin
@@ -21,17 +20,21 @@ import java.util.List;
 public class MealRestController extends AbstractMealController {
     static final String REST_URL = "/rest/meals";
 
-    @Override
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public Meal get(@RequestParam(value="id") int id) {
+    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
+    public Meal get(@RequestParam(value = "id") int id, @PathVariable int userId) {
+        setId(userId);
         return super.get(id);
     }
 
-    /*@Override
-    public void delete(int id) {
+    @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
+    public void delete(@RequestParam(value = "id") int id, @PathVariable int userId) {
+        setId(userId);
         super.delete(id);
     }
 
+    /*
     @Override
     public List<MealWithExceed> getAll() {
         return super.getAll();
