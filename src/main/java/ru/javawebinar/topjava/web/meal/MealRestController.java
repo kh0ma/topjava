@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.to.MealWithExceed;
 
 import java.time.LocalDate;
@@ -44,22 +45,24 @@ public class MealRestController extends AbstractMealController {
     public List<MealWithExceed> getAll() {
         return super.getAll();
     }
-    /*
-    @Override
-    public void update(Meal meal, int id) {
+
+    @PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void update(@RequestBody Meal meal, @RequestParam(value = "id", required=false) int id) {
         super.update(meal, id);
     }
 
-    @Override
-    public Meal create(Meal meal) {
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/create", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    /*@PutMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)*/
+    public Meal create(@RequestBody Meal meal) {
         return super.create(meal);
     }
-    */
+
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @RequestMapping(value = "/between", method = RequestMethod.GET)
-    public List<MealWithExceed> getBetween(@RequestParam(value = "startDateTime", required=false) LocalDateTime startDateTime,
-                                           @RequestParam(value = "endDateTime", required=false)   LocalDateTime endDateTime) {
+    public List<MealWithExceed> getBetween(@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam(value = "startDateTime", required=false) LocalDateTime startDateTime,
+                                           @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam(value = "endDateTime", required=false)   LocalDateTime endDateTime) {
         LocalDate startDate = startDateTime!=null ? startDateTime.toLocalDate() : null;
         LocalTime startTime = startDateTime!=null ? startDateTime.toLocalTime() : null;
         LocalDate endDate = endDateTime!=null ? endDateTime.toLocalDate() : null;
