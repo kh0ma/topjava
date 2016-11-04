@@ -46,8 +46,9 @@ public class MealRestController extends AbstractMealController {
         return super.getAll();
     }
 
-    @PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody Meal meal, @RequestParam(value = "id", required=false) int id) {
+    @RequestMapping(value = "/update", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    /*@PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE)*/
+    public void update(@RequestBody Meal meal, @RequestParam(value = "id") int id) {
         super.update(meal, id);
     }
 
