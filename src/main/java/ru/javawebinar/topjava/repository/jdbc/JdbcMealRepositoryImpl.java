@@ -49,10 +49,10 @@ public abstract class JdbcMealRepositoryImpl<T> implements MealRepository {
 
     @Repository
     @Profile(Profiles.POSTGRES)
-    public static class Java8JdbcMealRepositoryImpl extends JdbcMealRepositoryImpl<LocalDateTime> {
+    public static class Java8JdbcMealRepositoryImpl extends JdbcMealRepositoryImpl<Timestamp> {
         @Override
-        protected LocalDateTime toDbDateTime(LocalDateTime ldt) {
-            return ldt;
+        protected Timestamp toDbDateTime(LocalDateTime ldt) {
+            return Timestamp.valueOf(ldt);
         }
     }
 
