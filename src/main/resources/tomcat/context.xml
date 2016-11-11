@@ -42,12 +42,11 @@
               acquireIncrement="1" testConnectionOnCheckout="true"
               removeAbandoned="true" logAbandoned="true"
               driverClassName="org.postgresql.Driver"
-              username="user"
-              password="password"
-              url="jdbc:postgresql://localhost:5432/topjava"/>
-    <!--
-        username="wegxlfzjjgxaxy"
+              username="vzdlntakemrtdf"
+              password="_eCLcDMyaRAxuviicWsV6EJOaN"
+              url="jdbc:postgresql://ec2-54-75-228-51.eu-west-1.compute.amazonaws.com:5432/de19eji8nvrpkp?ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory"/>
+
+        <!--username="wegxlfzjjgxaxy"
         password="SSQyKKE_e93kiUCR-ehzMcKCxZ"
-        url="jdbc:postgresql://ec2-54-217-202-110.eu-west-1.compute.amazonaws.com:5432/dehm6lvm8bink0?ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory"/>
-    -->
+        url="jdbc:postgresql://ec2-54-217-202-110.eu-west-1.compute.amazonaws.com:5432/dehm6lvm8bink0?ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory"/>-->
 </Context>
