@@ -13,7 +13,7 @@ function add(add_title) {
     $('#editRow').modal();
 }
 
-function updateRow(id) {
+function updateRow(id, edit_title) {
     $('#modalTitle').html(edit_title);
     $.get(ajaxUrl + id, function (data) {
         $.each(data, function (key, value) {
