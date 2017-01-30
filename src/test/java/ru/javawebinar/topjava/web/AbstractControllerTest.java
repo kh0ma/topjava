@@ -17,6 +17,7 @@ import ru.javawebinar.topjava.service.UserService;
 
 import javax.annotation.PostConstruct;
 
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static ru.javawebinar.topjava.Profiles.ACTIVE_DB;
 import static ru.javawebinar.topjava.Profiles.DB_IMPLEMENTATION;
 
@@ -42,14 +43,11 @@ abstract public class AbstractControllerTest {
         CHARACTER_ENCODING_FILTER.setForceEncoding(true);
     }
 
-    @Autowired
-    private JpaUtil jpaUtil;
-
     protected MockMvc mockMvc;
-
     @Autowired
     protected UserService userService;
-
+    @Autowired
+    private JpaUtil jpaUtil;
     @Autowired
     private WebApplicationContext webApplicationContext;
 
@@ -58,6 +56,7 @@ abstract public class AbstractControllerTest {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(webApplicationContext)
                 .addFilter(CHARACTER_ENCODING_FILTER)
+                .apply(springSecurity())
                 .build();
     }
 
