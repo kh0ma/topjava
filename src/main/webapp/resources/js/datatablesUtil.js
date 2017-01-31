@@ -17,6 +17,7 @@ function updateRow(id, edit_title) {
     $('#modalTitle').html(edit_title);
     $.get(ajaxUrl + id, function (data) {
         $.each(data, function (key, value) {
+            if(key=="dateTime") value = value.toString().substring(0, 10) + ' ' + value.toString().substring(11, 16);
             form.find("input[name='" + key + "']").val(value);
         });
         $('#editRow').modal();
