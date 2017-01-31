@@ -1,5 +1,5 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/da8fb8eab521431da20007395881cb4f)](https://www.codacy.com/app/khomenko-dp/topjava?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kh0ma/topjava&amp;utm_campaign=Badge_Grade)
-[![Build Status](https://travis-ci.org/kh0ma/topjava.svg?branch=master)](https://travis-ci.org/kh0ma/topjava)
+[![Build Status](https://travis-ci.org/kh0ma/topjava.svg?branch=HW09)](https://travis-ci.org/kh0ma/topjava)
 [![Dependency Status](https://dependencyci.com/github/kh0ma/topjava/badge)](https://dependencyci.com/github/kh0ma/topjava)
 
 Java Enterprise Online Project 
