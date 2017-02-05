@@ -47,12 +47,6 @@ public class AdminAjaxController extends AbstractUserController {
         }
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorInfo handleMethodArgumentNotValidException(HttpServletRequest req, MethodArgumentNotValidException error) {
-        return new ErrorInfo(req.getRequestURL(),error);
-    }
-
     @PostMapping(value = "/{id}")
     public void enabled(@PathVariable("id") int id, @RequestParam("enabled") boolean enabled) {
         super.enable(id, enabled);

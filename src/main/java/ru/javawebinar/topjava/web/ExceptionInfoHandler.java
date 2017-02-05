@@ -6,11 +6,15 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.util.exception.ErrorInfo;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 
 /**
  * User: gkislin
@@ -42,6 +46,33 @@ public class ExceptionInfoHandler {
     @Order(Ordered.LOWEST_PRECEDENCE)
     public ErrorInfo handleError(HttpServletRequest req, Exception e) {
         return logAndGetErrorInfo(req, e, true);
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(BindException.class)
+    @ResponseBody
+    @Order(Ordered.LOWEST_PRECEDENCE)
+    public ErrorInfo handleBindException(HttpServletRequest req, BindException e) {
+        return logAndGetBingDetails(req, e, true);
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody
+    @Order(Ordered.LOWEST_PRECEDENCE)
+    public ErrorInfo handleMANVException(HttpServletRequest req, BindException e) {
+        return logAndGetBingDetails(req, e, true);
+    }
+
+    private ErrorInfo logAndGetBingDetails(HttpServletRequest req, BindingResult bindingResult, boolean logException)
+    {
+        String cause = "Validation Exception";
+
+        String[] details = bindingResult.getFieldErrors().stream().
+                map(fe -> fe.getField() + ' ' + fe.getDefaultMessage()).toArray(String[]::new);
+
+        LOG.warn("Validation exception at request " + req.getRequestURL() + ": " + Arrays.toString(details));
+        return new ErrorInfo(req.getRequestURL(),cause,details);
     }
 
     public ErrorInfo logAndGetErrorInfo(HttpServletRequest req, Exception e, boolean logException) {
