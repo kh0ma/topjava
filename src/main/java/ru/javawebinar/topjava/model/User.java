@@ -56,7 +56,7 @@ public class User extends NamedEntity {
     @BatchSize(size = 200)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Role> roles;
-    @Column(name = "calories_per_day", columnDefinition = "default 2000")
+    @Column(name = "calories_per_day", columnDefinition = "int default 2000")
     @Digits(fraction = 0, integer = 4)
     private int caloriesPerDay = UserUtil.DEFAULT_CALORIES_PER_DAY;
 
